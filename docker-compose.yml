@@ -3,20 +3,19 @@ services:
   maven:
     image: maven:3.3-jdk-8
     container_name: maven
-    volumes:
-      - myapp:/tmp
     working_dir: /tmp
     command: >
          bash -c "rm -rf App42PaaS-Java-MySQL-Sample; git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git
          && cd App42PaaS-Java-MySQL-Sample
          && mvn clean; mvn install"
+    volumes:
+      - myapp:/tmp/App42PaaS-Java-MySQL-Sample/target/
   tomcat:
     image: tomcat:latest
     container_name: tomcat
     links: maven
     volumes: 
-      - myapp:/tmp
-    command: bash -c "cp /tmp/App42PaaS-Java-MySQL-Sample/target/App42PaaS-Java-MySQL-Sample.war /usr/local/tomcat/webapps/"
+      - myapp:/usr/local/tomcat/webapps/
     ports:
       - "8080:8080"
     links:
