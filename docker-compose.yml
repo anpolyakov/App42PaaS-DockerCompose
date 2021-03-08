@@ -13,7 +13,8 @@ services:
   tomcat:
     image: tomcat:latest
     container_name: tomcat
-    depends_on: maven
+    depends_on: 
+      - maven
     volumes: 
       - ${PWD}/App42PaaS-Java-MySQL-Sample/target:/usr/local/tomcat/webapps/
     ports:
