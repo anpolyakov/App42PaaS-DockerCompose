@@ -17,7 +17,7 @@ services:
     depends_on: 
       - maven
     volumes: 
-      - ${PWD}/App42PaaS-Java-MySQL-Sample/target:./
+      - ${PWD}/App42PaaS-Java-MySQL-Sample/target/:./
     ports:
       - "8080:8080"
     links:
