@@ -6,11 +6,17 @@ services:
     volumes:
       - ${PWD}:/tmp
     working_dir: /tmp/
-    command: git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git
+    command: >
+         bash -c "git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git
+         && cd App42PaaS-Java-MySQL-Sample
+         && mvn clean; mvn install"
     links:
       - tomcat
   tomcat:
     image: tomcat:latest
+    container_name: tomcat
+    volumes: 
+      - ${PWD}:/webapps
     ports:
       - "8080:8080"
     links:
