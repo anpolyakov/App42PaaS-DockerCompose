@@ -1,8 +1,12 @@
-version: "3.3"
+version: "3"
 services: 
   maven:
     image: maven:3.3-jdk-8
     container_name: maven
+    volumes:
+      - ${PWD}:/tmp
+    working_dir: /tmp/
+    command: git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git
     links:
       - tomcat
   tomcat:
