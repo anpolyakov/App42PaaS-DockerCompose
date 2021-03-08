@@ -13,10 +13,11 @@ services:
   tomcat:
     image: tomcat:latest
     container_name: tomcat
+    working_dir: /usr/local/tomcat/webapps
     depends_on: 
       - maven
     volumes: 
-      - ${PWD}/App42PaaS-Java-MySQL-Sample/target:/usr/local/tomcat/webapps/
+      - ${PWD}/App42PaaS-Java-MySQL-Sample/target:./
     ports:
       - "8080:8080"
     links:
