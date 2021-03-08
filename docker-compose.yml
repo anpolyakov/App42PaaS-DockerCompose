@@ -4,7 +4,7 @@ services:
     image: maven:3.3-jdk-8
     container_name: maven
     volumes:
-      - ${PWD}:/tmp
+      - myapp:/tmp
     working_dir: /tmp
     command: >
          bash -c "rm -rf App42PaaS-Java-MySQL-Sample; git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git
@@ -13,10 +13,10 @@ services:
   tomcat:
     image: tomcat:latest
     container_name: tomcat
-    depends_on: 
-      - maven
+    links: maven
     volumes: 
-      - ${PWD}/App42PaaS-Java-MySQL-Sample/target/:/webapps
+      - myapp:/usr/local/tomcat/webapps/target/
+    working_dir: /usr/local/tomcat/webapps/target
     ports:
       - "8080:8080"
     links:
@@ -30,7 +30,5 @@ services:
       MYSQL_DATABASE: lesson12
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-
-      
-
-    
+volumes:
+  myapp: 
