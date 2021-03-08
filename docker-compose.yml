@@ -10,11 +10,10 @@ services:
          bash -c "rm -rf App42PaaS-Java-MySQL-Sample; git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git
          && cd App42PaaS-Java-MySQL-Sample
          && mvn clean; mvn install"
-    links:
-      - tomcat
   tomcat:
     image: tomcat:latest
     container_name: tomcat
+    depends_on: maven
     volumes: 
       - ${PWD}/App42PaaS-Java-MySQL-Sample/target:/usr/local/tomcat/webapps/
     ports:
