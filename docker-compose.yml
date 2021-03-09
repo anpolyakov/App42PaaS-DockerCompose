@@ -8,12 +8,14 @@ services:
          bash -c "rm -rf App42PaaS-Java-MySQL-Sample; git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git"
     volumes:
       - myapp:/tmp/
+      - conf:/tmp/conf/
   tomcat:
     image: tomcat:latest
     container_name: tomcat
     links: maven
     volumes: 
       - myapp:/usr/local/tomcat/webapps
+      - conf:/usr/local/tomcat/
     ports:
       - "8080:8080"
     links:
@@ -28,4 +30,5 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
 volumes:
-  myapp: 
+  myapp:
+   conf: 
