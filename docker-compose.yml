@@ -5,17 +5,20 @@ services:
     container_name: maven
     working_dir: /tmp
     command: >
-         bash -c "rm -rf App42PaaS-Java-MySQL-Sample; git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git"
+            bash -c "rm -rf App42PaaS-Java-MySQL-Sample; git clone https://github.com/anpolyakov/App42PaaS-Java-MySQL-Sample.git
+            && mkdir ${HOME}/ROOT && cp App42PaaS-Java-MySQL-Sample/WebContent/Config.properties ${HOME}/ROOT/Config.properties
+            && cd App42PaaS-Java-MySQL-Sample && mvn clean && mvn install && cd ..
+            && cp /tmp/App42PaaS-Java-MySQL-Sample/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war ."
     volumes:
       - myapp:/tmp/
-      - conf:/tmp/conf/
+      - conf:${HOME}
   tomcat:
     image: tomcat:latest
     container_name: tomcat
     links: maven
     volumes: 
       - myapp:/usr/local/tomcat/webapps
-      - conf:/usr/local/tomcat/
+      - conf:/usr/local/tomcat
     ports:
       - "8080:8080"
     links:
@@ -31,4 +34,4 @@ services:
       MYSQL_PASSWORD: password
 volumes:
   myapp:
-   conf: 
+  conf:
